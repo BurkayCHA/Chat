@@ -49,7 +49,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         preferenceManager=new PreferenceManager(getApplicationContext());
         init();
         loadUserDetails();
-        // getToken();
         setListeners();
         listenConversations();
         //getUsers();
@@ -148,7 +147,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
                         preferenceManager.getString(Constants.KEY_USER_ID)
                 );
         HashMap<String,Object>updates =new HashMap<>();
-        //updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
                     preferenceManager.clear();

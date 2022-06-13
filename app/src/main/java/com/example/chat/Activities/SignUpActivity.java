@@ -41,7 +41,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(this);
         setListeners();
-
     }
     private void setListeners(){
         binding.buttonSign.setOnClickListener(v ->onBackPressed());
@@ -81,9 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                             && task.getResult() != null
                             && task.getResult().getDocuments().size() > 0) {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                        //Log.i("TAG_MAIN", String.valueOf(documentSnapshot));
                          Log.i("TAG_MAIN", String.valueOf(documentSnapshot.getString(Constants.KEY_NAME)));
-                        // Log.i("TAG_MAIN", "SUCCESS");
                         Toast.makeText(getApplicationContext(), "Phone Using.", Toast.LENGTH_SHORT).show();
                     }else{
                         database.collection(Constants.KEY_COLLECTION_USERS)
