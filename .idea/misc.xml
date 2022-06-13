@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_chat_input.xml" value="0.33" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_content_bottom.xml" value="0.342" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_contet_top.xml" value="0.341" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_image.xml" value="0.1705" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_received_message.xml" value="0.342" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/background_sent_message.xml" value="0.2" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/btn_save.xml" value="0.341" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_add.xml" value="0.342" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.16" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_logout.xml" value="0.1835" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_outline_change_circle_24.xml" value="0.342" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/drawable/ic_settings.xml" value="0.1835" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_chat.xml" value="0.33" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/activity_users.xml" value="0.18" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/add_friend.xml" value="0.22" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/friend_list.xml" value="0.14357638888888888" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/item_container_received_message.xml" value="0.67" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/item_container_recent_conversion.xml" value="0.25" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/item_container_sent_message.xml" value="0.5" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/item_container_user.xml" value="0.33" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/list_friend.xml" value="0.3359375" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/layout/signinactivity.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/burka/Chat/app/src/main/res/menu/options_menu.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
