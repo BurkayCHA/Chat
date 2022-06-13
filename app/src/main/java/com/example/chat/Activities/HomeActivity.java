@@ -140,22 +140,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
             binding.progressBar.setVisibility(View.GONE);
         }
     });
-    /*
-        private void getToken(){
-            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
-        }
-
-        private void updateToken(String token){
-            FirebaseFirestore database= FirebaseFirestore.getInstance();
-            DocumentReference documentReference=
-                    database.collection(Constants.KEY_COLLECTION_USERS).document(
-                            preferenceManager.getString(Constants.KEY_USER_ID)
-                    );
-            documentReference.update(Constants.KEY_FCM_TOKEN,token)
-                    .addOnSuccessListener(unused -> showToast("Token updated succesfully"))
-                    .addOnFailureListener(e -> showToast("Not updated token "));
-        }*/
-
     private void signOut(){
         showToast("Signing out..");
         FirebaseFirestore database=FirebaseFirestore.getInstance();

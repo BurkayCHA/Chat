@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chat.Activities.UsersActivity;
 import com.example.chat.databinding.ItemContainerUserBinding;
 import com.example.chat.listeners.UserListener;
-import com.example.chat.models.Friend;
 import com.example.chat.models.User;
 
 import java.util.List;
