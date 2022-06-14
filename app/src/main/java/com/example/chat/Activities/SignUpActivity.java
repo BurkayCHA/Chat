@@ -44,7 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private void setListeners(){
         binding.buttonSign.setOnClickListener(v ->onBackPressed());
-        //startActivity(new Intent(getApplicationContext(),SignInActivity.class)));aynısı
         binding.buttonCreate.setOnClickListener(v -> {
             if (isValidSignUpDetails()){
                 signUp();
@@ -71,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_PASSWORD, binding.Password.getText().toString());
         user.put(Constants.KEY_NAME, binding.signupName.getText().toString());
         user.put(Constants.KEY_IMAGE,encodedImage);
+
         //numara kayıtlı mı kontrol
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_PHONE, binding.signupPhone.getText().toString())
@@ -103,6 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private String encodeImage(Bitmap bitmap){
         int previewWidth=150;
         int previewHeight=bitmap.getHeight()*previewWidth/ bitmap.getWidth();
