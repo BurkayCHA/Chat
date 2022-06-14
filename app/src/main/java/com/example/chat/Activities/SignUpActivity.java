@@ -95,10 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 })
-                                .addOnFailureListener(exception -> {
-
-                                    showToast(exception.getMessage());
-                                });
+                                .addOnFailureListener(exception -> showToast(exception.getMessage()));
                         Log.i("TAG_MAIN", "NOT SUCCESS");
                     }
                 });

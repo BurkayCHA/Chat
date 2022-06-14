@@ -1,12 +1,18 @@
 package com.example.chat.Activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import com.example.chat.adapters.ChatAdapter;
@@ -24,6 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +53,8 @@ public class ChatActivity extends BaseActivity {
     private FirebaseFirestore database;
     private String conversionId=null;
     private Boolean isReceiverAvailable=false;
+    private String encodedImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +69,20 @@ public class ChatActivity extends BaseActivity {
     int PICK_IMAGE_INTENT=1;
     ArrayList<String>mediaUriList=new ArrayList<>();
 
-    /*for photo     binding.layoutProfile.setOnClickListener(v->{
+ /*  binding.layoutSendPic.setOnClickListener(v->{
             Intent intent =new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
          });*/
-
+   private void setListeners(){
+     binding.imageBack.setOnClickListener(v -> onBackPressed());
+     binding.layoutSend.setOnClickListener(v -> sendMessage());
+     binding.layoutSendPic.setOnClickListener(v -> {
+         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+         pickImage.launch(intent);
+     });
+    }
 
    private void init(){
         preferenceManager=new PreferenceManager(getApplicationContext());
@@ -75,7 +94,57 @@ public class ChatActivity extends BaseActivity {
         );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         database=FirebaseFirestore.getInstance();
+   }
+    private String encodeImage(Bitmap bitmap){
+        int previewWidth=150;
+        int previewHeight=bitmap.getHeight()*previewWidth/ bitmap.getWidth();
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap,previewWidth,previewHeight,false);
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+        byte[] bytes=byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes,Base64.DEFAULT);
     }
+    private final ActivityResultLauncher<Intent> pickImage=registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode()==RESULT_OK){
+                    if (result.getData()!=null){
+                        Uri imageuri=result.getData().getData();
+                        try{
+                            InputStream inputStream= getContentResolver().openInputStream(imageuri);
+                            Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
+                          //  binding.sendPic.setImageBitmap(bitmap);
+                            encodedImage= encodeImage(bitmap);
+                            sendPic();
+                        }catch (FileNotFoundException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+    );
+   private void sendPic(){
+       HashMap<String,Object>message=new HashMap<>();
+       message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
+       message.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
+       message.put(Constants.KEY_TIMESTAMP,new Date());
+       message.put(Constants.KEY_MESSAGE,encodedImage);
+       database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+       if (conversionId!=null){
+           updateConversion(encodedImage);
+       }else{
+           HashMap<String,Object>conversion =new HashMap<>();
+           conversion.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
+           conversion.put(Constants.KEY_SENDER_NAME,preferenceManager.getString(Constants.KEY_SENDER_NAME));
+           conversion.put(Constants.KEY_SENDER_IMAGE,preferenceManager.getString(Constants.KEY_IMAGE));
+           conversion.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
+           conversion.put(Constants.KEY_RECEIVER_NAME,receiverUser.name);
+           conversion.put(Constants.KEY_RECEIVER_IMAGE,receiverUser.image);
+           conversion.put(Constants.KEY_LAST_MESSAGE,encodedImage);
+           conversion.put(Constants.KEY_TIMESTAMP,new Date());
+           addConversion(conversion);
+       }
+   }
    private void sendMessage(){
         HashMap<String, Object> message=new HashMap<>();
         message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
@@ -97,7 +166,7 @@ public class ChatActivity extends BaseActivity {
             conversion.put(Constants.KEY_TIMESTAMP,new Date());
             addConversion(conversion);
         }
-        binding.inputMessage.setText(null);
+        //binding.inputMessage.setText(null);
     }
 
    private void listenAvailabilityReceiver(){
@@ -168,8 +237,6 @@ public class ChatActivity extends BaseActivity {
         }
     };
 
-
-
    private Bitmap getBitmapFromEncodedString(String encodedImage){
         byte[] bytes= Base64.decode(encodedImage,Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
@@ -178,10 +245,7 @@ public class ChatActivity extends BaseActivity {
         receiverUser=(User) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textName.setText(receiverUser.name);
     }
-    private void setListeners(){
-        binding.imageBack.setOnClickListener(v -> onBackPressed());
-        binding.layoutSend.setOnClickListener(v -> sendMessage());
-    }
+
 
     private String getReadableDateTime(Date date){
         return new SimpleDateFormat("MMMM dd,yyyy- hh:mm a", Locale.getDefault()).format(date);

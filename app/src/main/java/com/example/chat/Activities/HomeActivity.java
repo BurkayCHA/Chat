@@ -51,7 +51,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         loadUserDetails();
         setListeners();
         listenConversations();
-        //getUsers();
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
         Constants.editor = Constants.sharedPreferences.edit();
 

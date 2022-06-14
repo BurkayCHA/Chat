@@ -43,7 +43,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
         setContentView(binding.getRoot());
         preferenceManager=new PreferenceManager(getApplicationContext());
         setListeners();
-        // getUsers();
+        // getUsers(); for all users
         getFriends();
     }
     private void setListeners(){
@@ -73,7 +73,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
                                 }else{
                                     for (DocumentSnapshot documentSnapshot:queryDocumentSnapshots.getDocuments()){
                                         if (idPhone.equals(preferenceManager.getString("phone"))) {
-                                            textPhone.setError("wrong phone");
+                                            textPhone.setError("That is Your Phone");
                                         }else{
                                             checkFriendExists(String.valueOf(phoneFriend));
                                             dialog.cancel();
@@ -127,11 +127,6 @@ public class UsersActivity extends BaseActivity implements UserListener {
         i.putExtra("phoneFriend",phoneFriend);
         startActivity(i);*/
     }
-
-    private void friendSearch(){
-
-    }
-
 
     private void getFriends(){
         FirebaseFirestore database=FirebaseFirestore.getInstance();

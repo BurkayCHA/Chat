@@ -135,6 +135,23 @@
             app:tint="@color/white"   />
 
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutSendPic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/background_chat_input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    <ImageView
+        android:id="@+id/sendPic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_send_pic"
+       />
+    </FrameLayout>
     
     <EditText
         android:id="@+id/inputMessage"
@@ -153,7 +170,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layoutSendPic"
         app:layout_constraintEnd_toStartOf="@id/layoutSend"/>
 
 
