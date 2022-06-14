@@ -62,6 +62,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
         database=FirebaseFirestore.getInstance();
     }
+    //clicked
     private void setListeners(){
 
         binding.imageSignOut.setOnClickListener(v -> signOut());
@@ -81,10 +82,11 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         binding.imageProfile.setImageBitmap(bitmap);
     }
+    //error message
     private void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
+    //
     private void listenConversations(){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))

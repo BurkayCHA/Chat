@@ -53,7 +53,6 @@ public class ChatActivity extends BaseActivity {
     private Boolean isReceiverAvailable=false;
     private String encodedImage;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +111,7 @@ public class ChatActivity extends BaseActivity {
                             InputStream inputStream= getContentResolver().openInputStream(imageuri);
                             Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
                           //  binding.sendPic.setImageBitmap(bitmap);
-                            encodedImage= encodeImage(bitmap);
+                            encodedImage=encodeImage(bitmap);
                             sendPic();
                         }catch (FileNotFoundException e){
                             e.printStackTrace();
@@ -164,7 +163,7 @@ public class ChatActivity extends BaseActivity {
             conversion.put(Constants.KEY_TIMESTAMP,new Date());
             addConversion(conversion);
         }
-        //binding.inputMessage.setText(null);
+        binding.inputMessage.setText(null);
     }
 
    private void listenAvailabilityReceiver(){

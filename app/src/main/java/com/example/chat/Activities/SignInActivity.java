@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.chat.utilities.PreferenceManager;
 public class SignInActivity extends AppCompatActivity {
 private ActivitySignInBinding binding;
 private PreferenceManager preferenceManager;
+private static String emaili;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ private PreferenceManager preferenceManager;
     });
 }
 
+
     private void signIn(){
         FirebaseFirestore database=FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_USERS)
@@ -74,9 +77,8 @@ private PreferenceManager preferenceManager;
                             }else{
                                 showToast("Unable to sign in");
                             }
-
-
                 });
+            emaili= binding.signinEmail.getText().toString();
     }
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

@@ -34,6 +34,23 @@
         app:layout_constraintStart_toEndOf="@id/imageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"/>
+    <ImageView
+        android:id="@+id/picturrr"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:padding="12dp"
+        android:paddingStart="12dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="8dp"
+        app:layout_constraintWidth_max="wrap"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/imageProfile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.75"/>
 
     <TextView
         android:id="@+id/textDatetime"

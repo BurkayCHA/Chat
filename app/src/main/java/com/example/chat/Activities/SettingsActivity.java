@@ -15,13 +15,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.chat.databinding.ActivitySettingsBinding;
 import com.example.chat.utilities.Constants;
 import com.example.chat.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -35,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "TAG_SETTINGS";
     private FirebaseFirestore database;
     PreferenceManager preferenceManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class SettingsActivity extends AppCompatActivity {
             database = FirebaseFirestore.getInstance();
             Map<String, Object> profileImage = new HashMap<>();
             profileImage.put(Constants.KEY_IMAGE, newData);
-           // Log.i(TAG, String.valueOf(database.collection("users").document("email").get()));
             database.collection(Constants.KEY_COLLECTION_USERS)
                     .whereEqualTo(Constants.KEY_EMAIL,"y@y.com")
                     .get()
@@ -96,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
             database = FirebaseFirestore.getInstance();
             Map<String, Object> userName = new HashMap<>();
             userName.put(Constants.KEY_NAME, newData);
+           // Log.i(TAG,);
             database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_EMAIL, "y@y.com")  //String.valueOf(database.collection(Constants.KEY_COLLECTION_USERS).document(Constants.KEY_USER_ID).collection(Constants.KEY_EMAIL)))
                 .get()
