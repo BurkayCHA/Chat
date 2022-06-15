@@ -6,17 +6,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.chat.adapters.RecentConversationsAdapter;
 import com.example.chat.databinding.ActivityMainBinding;
 import com.example.chat.listeners.ConversionListener;
 import com.example.chat.listeners.UserListener;
 import com.example.chat.models.ChatMessage;
-
 import com.example.chat.models.User;
 import com.example.chat.utilities.Constants;
 import com.example.chat.utilities.PreferenceManager;
@@ -37,7 +35,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     private List<ChatMessage> conversations;
     private RecentConversationsAdapter conversationsAdapter;
     private FirebaseFirestore database;
-
+    public static String emails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,8 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         listenConversations();
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
         Constants.editor = Constants.sharedPreferences.edit();
-
+        emails=preferenceManager.getString(Constants.KEY_USER_ID);
+        Log.i("dene",emails+"");
     }
 
     private void init(){
@@ -64,7 +63,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     }
     //clicked
     private void setListeners(){
-
         binding.imageSignOut.setOnClickListener(v -> signOut());
         binding.imageProfile.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
@@ -74,7 +72,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
             startActivity(new Intent(getApplicationContext(),UsersActivity.class)));
 
     }
-
     //myprofile
     private void loadUserDetails(){
         binding.textName.setText(Constants.sharedPreferences.getString(Constants.KEY_NAME, "no data"));//(preferenceManager.getString(Constants.KEY_NAME));
@@ -86,7 +83,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     private void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-    //
+
     private void listenConversations(){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
@@ -140,6 +137,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
             binding.progressBar.setVisibility(View.GONE);
         }
     });
+
     private void signOut(){
         showToast("Signing out..");
         FirebaseFirestore database=FirebaseFirestore.getInstance();
@@ -171,6 +169,4 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         startActivity(intent);
         finish();
     }
-
 }
-

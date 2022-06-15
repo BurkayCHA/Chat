@@ -30,9 +30,9 @@ import java.util.Map;
 public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding binding;
     private String encodedImage;
-    private static final String TAG = "TAG_SETTINGS";
     private FirebaseFirestore database;
     PreferenceManager preferenceManager;
+    String emaili=SignInActivity.emaili;
 
 
     @Override
@@ -43,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         setListeners();
         preferenceManager=new PreferenceManager(getApplicationContext());
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
+        Log.i("emaili", String.valueOf(emaili));
     }
 
     private void setListeners() {
@@ -70,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
             Map<String, Object> profileImage = new HashMap<>();
             profileImage.put(Constants.KEY_IMAGE, newData);
             database.collection(Constants.KEY_COLLECTION_USERS)
-                    .whereEqualTo(Constants.KEY_EMAIL,"y@y.com")
+                    .whereEqualTo(Constants.KEY_EMAIL,emaili)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -96,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
             userName.put(Constants.KEY_NAME, newData);
            // Log.i(TAG,);
             database.collection(Constants.KEY_COLLECTION_USERS)
-                .whereEqualTo(Constants.KEY_EMAIL, "y@y.com")  //String.valueOf(database.collection(Constants.KEY_COLLECTION_USERS).document(Constants.KEY_USER_ID).collection(Constants.KEY_EMAIL)))
+                .whereEqualTo(Constants.KEY_EMAIL, emaili)  //String.valueOf(database.collection(Constants.KEY_COLLECTION_USERS).document(Constants.KEY_USER_ID).collection(Constants.KEY_EMAIL)))
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

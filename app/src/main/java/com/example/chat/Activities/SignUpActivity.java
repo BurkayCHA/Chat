@@ -29,7 +29,6 @@ import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "TAG_SIGNUP";
     public PreferenceManager preferenceManager;
     private ActivitySignUpBinding binding;
     private String encodedImage;
@@ -173,6 +172,3 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }*/
 }
-
-
-
