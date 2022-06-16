@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -32,7 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
     private String encodedImage;
     private FirebaseFirestore database;
     PreferenceManager preferenceManager;
-    String emaili=SignInActivity.emaili;
+ //   String emaili=SignInActivity.emaili;
+    String emaili=HomeActivity.currentEmail;
 
 
     @Override
@@ -43,7 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
         setListeners();
         preferenceManager=new PreferenceManager(getApplicationContext());
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
-        Log.i("emaili", String.valueOf(emaili));
     }
 
     private void setListeners() {
@@ -53,7 +54,15 @@ public class SettingsActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
         });
-        binding.changeSave.setOnClickListener(v -> change());
+        binding.changeSave.setOnClickListener(v -> {
+            change();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                finish();
+            }, 1000);
+
+        });
     }
 
     private void change() {
@@ -145,5 +154,4 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
     );
-
 }

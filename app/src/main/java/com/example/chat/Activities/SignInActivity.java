@@ -14,7 +14,7 @@ import com.example.chat.utilities.PreferenceManager;
 public class SignInActivity extends AppCompatActivity {
 private ActivitySignInBinding binding;
 private PreferenceManager preferenceManager;
-public static String emaili;
+//public static String emaili;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public static String emaili;
                             }else{
                                 showToast("Unable to sign in");
                             }
-                            emaili= binding.signinEmail.getText().toString();
+                     //       emaili= binding.signinEmail.getText().toString();
                 });
 
     }

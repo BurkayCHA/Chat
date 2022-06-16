@@ -10,6 +10,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
 import com.example.chat.adapters.RecentConversationsAdapter;
 import com.example.chat.databinding.ActivityMainBinding;
 import com.example.chat.listeners.ConversionListener;
@@ -18,8 +21,11 @@ import com.example.chat.models.ChatMessage;
 import com.example.chat.models.User;
 import com.example.chat.utilities.Constants;
 import com.example.chat.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,13 +35,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 public class HomeActivity extends BaseActivity implements ConversionListener,UserListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
     private RecentConversationsAdapter conversationsAdapter;
     private FirebaseFirestore database;
-    public static String emails;
+    public static String currentEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +59,17 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         listenConversations();
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
         Constants.editor = Constants.sharedPreferences.edit();
-        emails=preferenceManager.getString(Constants.KEY_USER_ID);
-        Log.i("dene",emails+"");
+        String ID=preferenceManager.getString(Constants.KEY_USER_ID);
+
+        DocumentReference docRef = database.collection(Constants.KEY_COLLECTION_USERS).document(ID);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    currentEmail= String.valueOf(document.get(Constants.KEY_EMAIL));
+                }
+            }
+        });
     }
 
     private void init(){
@@ -74,8 +91,8 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     }
     //myprofile
     private void loadUserDetails(){
-        binding.textName.setText(Constants.sharedPreferences.getString(Constants.KEY_NAME, "no data"));//(preferenceManager.getString(Constants.KEY_NAME));
-        byte[] bytes= Base64.decode(Constants.sharedPreferences.getString(Constants.KEY_IMAGE,"no data"),Base64.DEFAULT);
+        binding.textName.setText(Constants.sharedPreferences.getString(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME)));//(preferenceManager.getString(Constants.KEY_NAME));
+        byte[] bytes= Base64.decode(Constants.sharedPreferences.getString(Constants.KEY_IMAGE,preferenceManager.getString(Constants.KEY_IMAGE)),Base64.DEFAULT);
         Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         binding.imageProfile.setImageBitmap(bitmap);
     }
