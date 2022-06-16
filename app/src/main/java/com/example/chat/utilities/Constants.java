@@ -28,8 +28,6 @@ public class Constants {
     public static final String KEY_LAST_MESSAGE="lastMessage";
     public static final String KEY_AVAILABILITY="availability";
     public static final String KEY_FRIEND="friend";
-    public static final String KEY_SENDER_PHONE="senderPhone";
-    public static final String KEY_RECEIVER_PHONE="receiverPhone";
 
     public static final String PREFERENCE_KEY = "MY_PREFS";
     public static SharedPreferences sharedPreferences;

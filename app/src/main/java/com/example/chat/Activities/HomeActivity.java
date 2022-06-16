@@ -59,8 +59,11 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         listenConversations();
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
         Constants.editor = Constants.sharedPreferences.edit();
-        String ID=preferenceManager.getString(Constants.KEY_USER_ID);
+        userDeneme();
 
+    }
+    private void userDeneme(){
+        String ID=preferenceManager.getString(Constants.KEY_USER_ID);
         DocumentReference docRef = database.collection(Constants.KEY_COLLECTION_USERS).document(ID);
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -71,7 +74,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
             }
         });
     }
-
     private void init(){
         conversations=new ArrayList<>();
         conversationsAdapter=new RecentConversationsAdapter(conversations,this);
@@ -91,7 +93,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     }
     //myprofile
     private void loadUserDetails(){
-        binding.textName.setText(Constants.sharedPreferences.getString(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME)));//(preferenceManager.getString(Constants.KEY_NAME));
+        binding.textUserName.setText(Constants.sharedPreferences.getString(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME)));//(preferenceManager.getString(Constants.KEY_NAME));
         byte[] bytes= Base64.decode(Constants.sharedPreferences.getString(Constants.KEY_IMAGE,preferenceManager.getString(Constants.KEY_IMAGE)),Base64.DEFAULT);
         Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         binding.imageProfile.setImageBitmap(bitmap);

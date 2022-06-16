@@ -14,7 +14,6 @@ import com.example.chat.utilities.PreferenceManager;
 public class SignInActivity extends AppCompatActivity {
 private ActivitySignInBinding binding;
 private PreferenceManager preferenceManager;
-//public static String emaili;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
