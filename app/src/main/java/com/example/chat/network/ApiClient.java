@@ -1,5 +1,6 @@
 package com.example.chat.network;
 
+import retrofit2.http.Headers;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 

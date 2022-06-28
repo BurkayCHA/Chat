@@ -2,11 +2,10 @@ package com.example.chat.adapters;
 
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.chat.databinding.ItemContainerReceivedMessageBinding;
 import com.example.chat.databinding.ItemContainerSentMessageBinding;
 import com.example.chat.models.ChatMessage;
@@ -80,8 +79,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding=itemContainerSentMessageBinding;
         }
         void setData(ChatMessage chatMessage){
-                binding.textMessage.setText(chatMessage.message);
-                binding.textDatetime.setText(chatMessage.dateTime);
+            //if mesaj
+            binding.textSentMessage.setText(chatMessage.message);
+           // binding.sendPicture.setImageBitmap(Integer.parseInt(chatMessage.sendImage));
+            //if photo
+            binding.sendPicture.setVisibility(View.VISIBLE);
+            binding.textDatetime.setText(chatMessage.dateTime);
         }
     }
     static class ReceivedMessageViewHolder extends RecyclerView.ViewHolder{
@@ -92,7 +95,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding=itemContainerReceivedMessageBinding;
         }
         void setData(ChatMessage chatMessage,Bitmap receiverProfileImage){
-            binding.textMessage.setText(chatMessage.message);
+            //if mesaj
+            binding.textReceivMessage.setText(chatMessage.message);
+            //if photo
+           // binding.receivPicture.setImageResource(Integer.parseInt(chatMessage.receivImage));
             binding.textDatetime.setText(chatMessage.dateTime);
             binding.imageProfile.setImageBitmap(receiverProfileImage);
         }

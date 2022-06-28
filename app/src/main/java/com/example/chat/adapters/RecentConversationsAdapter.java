@@ -5,10 +5,8 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.chat.databinding.ItemContainerRecentConversionBinding;
 import com.example.chat.listeners.ConversionListener;
 import com.example.chat.models.ChatMessage;
@@ -59,6 +57,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
             binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
             binding.textFriendsName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message);
+        //    if (chatMessage.message.isEmpty())
             binding.getRoot().setOnClickListener(v -> {
                 User user = new User();
                 user.id=chatMessage.conversionId;

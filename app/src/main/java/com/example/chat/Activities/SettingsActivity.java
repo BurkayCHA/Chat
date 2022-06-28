@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
     private ActivitySettingsBinding binding;
     private String encodedImage;
     private FirebaseFirestore database;
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
             handler.postDelayed(() -> {
                 startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                 finish();
-            }, 1000);
+            }, 2000);
 
         });
     }

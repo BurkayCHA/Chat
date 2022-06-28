@@ -52,8 +52,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-bom:30.1.0'
     implementation 'com.google.firebase:firebase-auth:21.0.5'
 
+    //firebase message
     implementation 'com.google.firebase:firebase-messaging:23.0.5'
     implementation 'com.google.firebase:firebase-firestore:24.1.2'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
     //multidex
     implementation 'androidx.multidex:multidex:2.0.1'

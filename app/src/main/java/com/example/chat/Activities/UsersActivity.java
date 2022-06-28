@@ -32,7 +32,6 @@ public class UsersActivity extends BaseActivity implements UserListener {
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
-
     Editable phoneFriend;
 
     @Override

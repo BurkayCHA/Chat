@@ -68,9 +68,10 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, binding.signupEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.Password.getText().toString());
         user.put(Constants.KEY_NAME, binding.signupName.getText().toString());
+        //user.put(Constants.KEY_FCM_TOKEN,preferenceManager.getString(Constants.KEY_FCM_TOKEN));
         user.put(Constants.KEY_IMAGE,encodedImage);
 
-        //numara kayıtlı mı kontrol
+        //phone used?
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_PHONE, binding.signupPhone.getText().toString())
                 .get()

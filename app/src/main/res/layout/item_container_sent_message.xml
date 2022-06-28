@@ -14,11 +14,11 @@
         android:layout_height="25dp"
         android:background="@color/white"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/textMessage"
+        app:layout_constraintBottom_toBottomOf="@id/textSentMessage"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/textMessage"
+        android:id="@+id/textSentMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
@@ -35,9 +35,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"/>
     <ImageView
-        android:id="@+id/picturee"
+        android:id="@+id/sendPicture"
         android:visibility="invisible"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:padding="12dp"
@@ -60,7 +60,7 @@
         android:layout_marginTop="6dp"
         android:textColor="@color/gray"
         android:textSize="8sp"
-        app:layout_constraintEnd_toEndOf="@id/textMessage"
-        app:layout_constraintTop_toBottomOf="@id/textMessage"/>
+        app:layout_constraintEnd_toEndOf="@id/textSentMessage"
+        app:layout_constraintTop_toBottomOf="@id/textSentMessage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

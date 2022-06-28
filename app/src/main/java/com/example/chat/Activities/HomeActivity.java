@@ -7,12 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
 import com.example.chat.adapters.RecentConversationsAdapter;
 import com.example.chat.databinding.ActivityMainBinding;
 import com.example.chat.listeners.ConversionListener;
@@ -21,21 +17,21 @@ import com.example.chat.models.ChatMessage;
 import com.example.chat.models.User;
 import com.example.chat.utilities.Constants;
 import com.example.chat.utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+
 
 public class HomeActivity extends BaseActivity implements ConversionListener,UserListener {
     private ActivityMainBinding binding;
@@ -49,9 +45,10 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityMainBinding.inflate(getLayoutInflater());
-        database=FirebaseFirestore.getInstance();
 
+        database=FirebaseFirestore.getInstance();
         setContentView(binding.getRoot());
+
         preferenceManager=new PreferenceManager(getApplicationContext());
         init();
         loadUserDetails();
@@ -60,6 +57,8 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         Constants.sharedPreferences = getSharedPreferences(Constants.PREFERENCE_KEY, 0);
         Constants.editor = Constants.sharedPreferences.edit();
         userDeneme();
+        getToken();
+
 
     }
     private void userDeneme(){
@@ -165,6 +164,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
                         preferenceManager.getString(Constants.KEY_USER_ID)
                 );
         HashMap<String,Object>updates =new HashMap<>();
+        updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
                     preferenceManager.clear();
@@ -172,6 +172,22 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
                     finish();
                 })
                 .addOnFailureListener(e -> showToast("Unable to sign out"));
+    }
+
+
+    private void getToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+    private void updateToken(String token){
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
+        FirebaseFirestore database=FirebaseFirestore.getInstance();
+        DocumentReference documentReference=
+                database.collection(Constants.KEY_COLLECTION_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        documentReference.update(Constants.KEY_FCM_TOKEN,token)
+                .addOnSuccessListener(unused -> showToast("Token updated succesfuly"))
+                .addOnFailureListener(e -> showToast("Unable to update token"));
     }
 
     @Override
