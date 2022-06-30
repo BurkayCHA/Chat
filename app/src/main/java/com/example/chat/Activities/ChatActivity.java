@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,9 +26,7 @@ import com.example.chat.network.ApiClient;
 import com.example.chat.network.ApiService;
 import com.example.chat.utilities.Constants;
 import com.example.chat.utilities.PreferenceManager;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.ClientProtocolException;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -140,7 +138,7 @@ public class ChatActivity extends BaseActivity {
     );
 
    private void sendPic(){
-       //ImageView sendPicture= findViewById(R.id.sendPicture);
+       //ImageView img= findViewById(R.id.sendPicture);
        HashMap<String,Object>message=new HashMap<>();
        message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
        message.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
@@ -174,7 +172,7 @@ public class ChatActivity extends BaseActivity {
                 data.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
                 JSONObject body=new JSONObject();
                 body.put(Constants.REMOTE_MSG_DATA,data);
-                body.put(Constants.REMOTE_MSG_REGISTARATION_IDS,tokens);
+                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
 
                 sendNotification(body.toString());
            }catch (Exception exception){
@@ -216,7 +214,7 @@ public class ChatActivity extends BaseActivity {
                     data.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
                     JSONObject body=new JSONObject();
                     body.put(Constants.REMOTE_MSG_DATA,data);
-                    body.put(Constants.REMOTE_MSG_REGISTARATION_IDS,tokens);
+                    body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
                     sendNotification(body.toString());
                 }catch (Exception exception){
                     showToast(exception.getMessage());
@@ -252,6 +250,7 @@ public class ChatActivity extends BaseActivity {
                         if (response.body()!=null){
                             JSONObject responseJson=new JSONObject(response.body());
                             JSONArray results=responseJson.getJSONArray("results");
+                            Log.i("results", String.valueOf(results));
                             if (responseJson.getInt("failure")==1){
                                 JSONObject error=(JSONObject) results.get(0);
                                 showToast(error.getString("error"));
@@ -259,11 +258,14 @@ public class ChatActivity extends BaseActivity {
                             }
                         }
                     }catch (JSONException e){
+                        Log.e("TAG_NOTIF", e.getMessage());
                         e.printStackTrace();
                     }
                     showToast("Notification sent succesfully");
+                    Log.e("TAG_NOTIF", "not sent");
                 }else{
                     showToast("Error"+response.code());
+                    Log.e("TAG_NOTIF", "Error: " + response.code() + "-" + response + "-" + response.errorBody());
                 }
             }
 

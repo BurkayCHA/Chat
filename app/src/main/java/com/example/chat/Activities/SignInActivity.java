@@ -70,7 +70,6 @@ private PreferenceManager preferenceManager;
                             }else{
                                 showToast("Unable to sign in");
                             }
-                     //       emaili= binding.signinEmail.getText().toString();
                 });
 
     }

@@ -150,6 +150,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
                                             user.image=String.valueOf(documentSnapshot.getString(Constants.KEY_IMAGE));
                                             user.phone=String.valueOf(documentSnapshot.getString(Constants.KEY_PHONE));
                                             user.email=String.valueOf(documentSnapshot.getString(Constants.KEY_EMAIL));
+                                            user.token=String.valueOf(documentSnapshot.getString(Constants.KEY_FCM_TOKEN));
                                             user.id=documentSnapshot.getId();
                                             Log.i("TAG_USER", user.id);
                                             users.add(user);

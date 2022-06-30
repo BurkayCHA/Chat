@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.chat.R;
 import com.example.chat.databinding.ItemContainerReceivedMessageBinding;
 import com.example.chat.databinding.ItemContainerSentMessageBinding;
 import com.example.chat.models.ChatMessage;
@@ -79,11 +81,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding=itemContainerSentMessageBinding;
         }
         void setData(ChatMessage chatMessage){
-            //if mesaj
             binding.textSentMessage.setText(chatMessage.message);
-           // binding.sendPicture.setImageBitmap(Integer.parseInt(chatMessage.sendImage));
+         //   binding.sendPicture.setImageResource(R.drawable.ic_add);
+          //  binding.sendPicture.setVisibility(View.VISIBLE);
+             // binding.sendPicture.setImageBitmap(Integer.parseInt(chatMessage.sendImage));
             //if photo
-            binding.sendPicture.setVisibility(View.VISIBLE);
             binding.textDatetime.setText(chatMessage.dateTime);
         }
     }

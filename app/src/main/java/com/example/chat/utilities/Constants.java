@@ -35,7 +35,7 @@ public class Constants {
     public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";
     public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
     public static final String REMOTE_MSG_DATA = "data";
-    public static final String REMOTE_MSG_REGISTARATION_IDS = "registaration_ids";
+    public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
 
     public static HashMap<String, String> remoteMsgHeaders = null;
 
@@ -44,7 +44,7 @@ public class Constants {
             remoteMsgHeaders = new HashMap<>();
             remoteMsgHeaders.put(
                     REMOTE_MSG_AUTHORIZATION,
-            "key=AIzaSyAaXR7ZSkrSWDnjkwTHonFSSd_CyuGMDkc"
+            "key=AAAAAGZi92g:APA91bH41nFCNuliofiCYQ8AMHrvN90iSGHelWTiw0hnRWZp6FZHjTjiXPDk-Hvu4H2DBbfgmU0c9FtKvkAqc5TfApA5BaXW3cBYB7LF9VNRPltpJvuOK7eSbKQ1vUtefUoYnxJuxe-P"
             );
             remoteMsgHeaders.put(
                     REMOTE_MSG_CONTENT_TYPE,

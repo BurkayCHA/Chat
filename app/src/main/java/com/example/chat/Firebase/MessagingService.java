@@ -12,7 +12,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.chat.Activities.ChatActivity;
-import com.example.chat.BuildConfig;
 import com.example.chat.R;
 import com.example.chat.models.User;
 import com.example.chat.utilities.Constants;
@@ -44,7 +43,7 @@ public class MessagingService extends FirebaseMessagingService {
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
 
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this,channelId);
-        builder.setSmallIcon(R.drawable.ic_notifications);
+        builder.setSmallIcon(R.drawable.ic_black_notifications);
         builder.setContentTitle(user.name);
         builder.setContentText(remoteMessage.getData().get(Constants.KEY_MESSAGE));
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(

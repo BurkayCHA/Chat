@@ -58,9 +58,8 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         Constants.editor = Constants.sharedPreferences.edit();
         userDeneme();
         getToken();
-
-
     }
+
     private void userDeneme(){
         String ID=preferenceManager.getString(Constants.KEY_USER_ID);
         DocumentReference docRef = database.collection(Constants.KEY_COLLECTION_USERS).document(ID);
@@ -73,6 +72,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
             }
         });
     }
+
     private void init(){
         conversations=new ArrayList<>();
         conversationsAdapter=new RecentConversationsAdapter(conversations,this);
@@ -102,6 +102,7 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    //last message
     private void listenConversations(){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
@@ -156,6 +157,21 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
         }
     });
 
+    private void getToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+    private void updateToken(String token){
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
+        FirebaseFirestore database=FirebaseFirestore.getInstance();
+        DocumentReference documentReference=
+                database.collection(Constants.KEY_COLLECTION_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        documentReference.update(Constants.KEY_FCM_TOKEN,token)
+//                .addOnSuccessListener(unused -> showToast("Token updated succesfuly"))
+                .addOnFailureListener(e -> showToast("Unable to update token"));
+    }
+
     private void signOut(){
         showToast("Signing out..");
         FirebaseFirestore database=FirebaseFirestore.getInstance();
@@ -175,20 +191,6 @@ public class HomeActivity extends BaseActivity implements ConversionListener,Use
     }
 
 
-    private void getToken(){
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
-    }
-    private void updateToken(String token){
-        preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
-        FirebaseFirestore database=FirebaseFirestore.getInstance();
-        DocumentReference documentReference=
-                database.collection(Constants.KEY_COLLECTION_USERS).document(
-                        preferenceManager.getString(Constants.KEY_USER_ID)
-                );
-        documentReference.update(Constants.KEY_FCM_TOKEN,token)
-                .addOnSuccessListener(unused -> showToast("Token updated succesfuly"))
-                .addOnFailureListener(e -> showToast("Unable to update token"));
-    }
 
     @Override
     public void onConversionClicked(User user) {
