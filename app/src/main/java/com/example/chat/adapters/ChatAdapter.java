@@ -2,12 +2,9 @@ package com.example.chat.adapters;
 
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.chat.R;
 import com.example.chat.databinding.ItemContainerReceivedMessageBinding;
 import com.example.chat.databinding.ItemContainerSentMessageBinding;
 import com.example.chat.models.ChatMessage;
@@ -17,11 +14,15 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<ChatMessage> chatMessages;
-    private final Bitmap receiverProfileImage;
+    private Bitmap receiverProfileImage;
     private final String senderId;
 
     public static final int VIEW_TYPE_SENT=1;
     public static final int VIEW_TYPE_RECEIVED=2;
+
+    public void setReceiverProfileImage(Bitmap bitmap){
+        receiverProfileImage=bitmap;
+    }
 
     public ChatAdapter(List<ChatMessage> chatMessages, Bitmap receiverProfileImage, String senderId) {
         this.chatMessages = chatMessages;
@@ -102,7 +103,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //if photo
            // binding.receivPicture.setImageResource(Integer.parseInt(chatMessage.receivImage));
             binding.textDatetime.setText(chatMessage.dateTime);
-            binding.imageProfile.setImageBitmap(receiverProfileImage);
+            if (receiverProfileImage!=null){
+                binding.imageProfile.setImageBitmap(receiverProfileImage);
+            }
         }
     }
 }

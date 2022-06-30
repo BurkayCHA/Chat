@@ -18,6 +18,7 @@ import com.example.chat.utilities.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class MessagingService extends FirebaseMessagingService {
@@ -40,7 +41,8 @@ public class MessagingService extends FirebaseMessagingService {
         Intent intent=new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Constants.KEY_USER,user);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
+        @SuppressLint("UnspecifiedImmutableFlag")
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
 
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this,channelId);
         builder.setSmallIcon(R.drawable.ic_black_notifications);
@@ -53,7 +55,7 @@ public class MessagingService extends FirebaseMessagingService {
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            CharSequence channelName= "chat message";
+            CharSequence channelName= "Chat Message";
             String channelDescription="This notification channel is used for chat message notifications";
             int importance= NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel=new NotificationChannel(channelId,channelName,importance);
@@ -63,6 +65,6 @@ public class MessagingService extends FirebaseMessagingService {
         }
         NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
         notificationManagerCompat.notify(notificationId,builder.build());
-        Log.d("FCM","Message"+remoteMessage.getNotification().getBody());
+        Log.d("FCM","Message"+ Objects.requireNonNull(remoteMessage.getNotification()).getBody());
     }
 }

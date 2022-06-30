@@ -78,20 +78,6 @@
         app:layout_constraintTop_toBottomOf="@id/imageBack"
         />
 
-    <TextView
-        android:id="@+id/textAvailability"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/viewSupporter"
-        android:background="@color/green"
-        android:text="Online"
-        android:textSize="10sp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        android:padding="2dp"/>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
@@ -173,7 +159,17 @@
         app:layout_constraintStart_toEndOf="@id/layoutSendPic"
         app:layout_constraintEnd_toStartOf="@id/layoutSend"/>
 
-
-
+    <TextView
+        android:id="@+id/textAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/viewSupporter"
+        android:background="@color/green"
+        android:text="Online"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:padding="2dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

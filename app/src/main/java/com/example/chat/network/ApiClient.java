@@ -1,7 +1,5 @@
 package com.example.chat.network;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 

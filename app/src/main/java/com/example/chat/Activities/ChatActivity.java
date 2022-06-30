@@ -14,10 +14,8 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.chat.R;
 import com.example.chat.adapters.ChatAdapter;
 import com.example.chat.databinding.ActivityChatBinding;
 import com.example.chat.models.ChatMessage;
@@ -170,6 +168,7 @@ public class ChatActivity extends BaseActivity {
                 data.put(Constants.KEY_NAME,preferenceManager.getString(Constants.KEY_NAME));
                 data.put(Constants.KEY_FCM_TOKEN,preferenceManager.getString(Constants.KEY_FCM_TOKEN));
                 data.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
+
                 JSONObject body=new JSONObject();
                 body.put(Constants.REMOTE_MSG_DATA,data);
                 body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
@@ -223,7 +222,7 @@ public class ChatActivity extends BaseActivity {
             binding.inputMessage.setText(null);
         }
 
-
+/*
          Bitmap StringToBitMap(String encodedString){
         try{
             byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
@@ -233,7 +232,7 @@ public class ChatActivity extends BaseActivity {
             e.getMessage();
             return null;
         }
-    }
+    }*/
 
    private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -290,6 +289,11 @@ public class ChatActivity extends BaseActivity {
                     isReceiverAvailable=availability==1;
                 }
                 receiverUser.token=value.getString(Constants.KEY_FCM_TOKEN);
+                if (receiverUser.image==null){
+                    receiverUser.image=value.getString(Constants.KEY_IMAGE);
+                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodedString(receiverUser.image));
+                    chatAdapter.notifyItemRangeChanged(0,chatMessages.size());
+                }
             }
             if (isReceiverAvailable){
                 binding.textAvailability.setVisibility(View.VISIBLE);
@@ -349,8 +353,12 @@ public class ChatActivity extends BaseActivity {
    };
 
    private Bitmap getBitmapFromEncodedString(String encodedImage){
-        byte[] bytes= Base64.decode(encodedImage,Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        if(encodedImage!=null){
+            byte[] bytes= Base64.decode(encodedImage,Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        }else{
+            return null;
+        }
    }
    private void loadReceiverDetails(){
         receiverUser=(User) getIntent().getSerializableExtra(Constants.KEY_USER);
