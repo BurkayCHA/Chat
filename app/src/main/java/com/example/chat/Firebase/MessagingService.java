@@ -18,7 +18,6 @@ import com.example.chat.utilities.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class MessagingService extends FirebaseMessagingService {
@@ -30,6 +29,7 @@ public class MessagingService extends FirebaseMessagingService {
 
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage){
         super.onMessageReceived(remoteMessage);
+
         User user=new User();
         user.id=remoteMessage.getData().get(Constants.KEY_USER_ID);
         user.name=remoteMessage.getData().get(Constants.KEY_NAME);
@@ -38,12 +38,12 @@ public class MessagingService extends FirebaseMessagingService {
         int notificationId=new Random().nextInt();
         String channelId="chat_message";
 
+        //set notifi tap action
         Intent intent=new Intent(this, ChatActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra(Constants.KEY_USER,user);
-        @SuppressLint("UnspecifiedImmutableFlag")
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        intent.putExtra(Constants.KEY_USER, user);
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
-
+        //set notification content
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this,channelId);
         builder.setSmallIcon(R.drawable.ic_black_notifications);
         builder.setContentTitle(user.name);
@@ -52,8 +52,9 @@ public class MessagingService extends FirebaseMessagingService {
                 remoteMessage.getData().get(Constants.KEY_MESSAGE)
         ));
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(pendingIntent);//<--- tap action
         builder.setAutoCancel(true);
+        //create channel
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             CharSequence channelName= "Chat Message";
             String channelDescription="This notification channel is used for chat message notifications";
@@ -63,8 +64,9 @@ public class MessagingService extends FirebaseMessagingService {
             NotificationManager notificationManager=getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+        //show notif
         NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
         notificationManagerCompat.notify(notificationId,builder.build());
-        Log.d("FCM","Message"+ Objects.requireNonNull(remoteMessage.getNotification()).getBody());
+        //Log.d("FCM","Message"+ Objects.requireNonNull(remoteMessage.getNotification()).getBody());
     }
 }

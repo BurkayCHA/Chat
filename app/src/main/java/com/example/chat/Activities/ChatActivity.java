@@ -87,12 +87,12 @@ public class ChatActivity extends BaseActivity {
    private void setListeners(){
      binding.imageBack.setOnClickListener(v -> onBackPressed());
      binding.layoutSend.setOnClickListener(v -> sendMessage());
-     binding.layoutSendPic.setOnClickListener(v -> {
+    /* binding.layoutSendPic.setOnClickListener(v -> {
          Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
        //  intent.setType("image/*");
          intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
          pickImage.launch(intent);
-     });
+     });*/
     }
 
    private void init(){
@@ -126,7 +126,7 @@ public class ChatActivity extends BaseActivity {
                             Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
                             //binding.sendPic.setImageBitmap(bitmap);
                             encodedImage=encodeImage(bitmap);
-                            sendPic();
+                            //sendPic();
                         }catch (FileNotFoundException e){
                             e.printStackTrace();
                         }
@@ -135,7 +135,7 @@ public class ChatActivity extends BaseActivity {
             }
     );
 
-   private void sendPic(){
+   /*private void sendPic(){
        //ImageView img= findViewById(R.id.sendPicture);
        HashMap<String,Object>message=new HashMap<>();
        message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
@@ -179,7 +179,7 @@ public class ChatActivity extends BaseActivity {
            }
        }
        binding.inputMessage.setText(null);
-   }
+   }*/
    private void sendMessage(){
         HashMap<String, Object> message=new HashMap<>();
         message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
@@ -261,7 +261,7 @@ public class ChatActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     showToast("Notification sent succesfully");
-                    Log.e("TAG_NOTIF", "not sent");
+                    Log.e("TAG_NOTIF", "sent");
                 }else{
                     showToast("Error"+response.code());
                     Log.e("TAG_NOTIF", "Error: " + response.code() + "-" + response + "-" + response.errorBody());

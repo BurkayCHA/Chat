@@ -122,7 +122,7 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <!--<FrameLayout
         android:id="@+id/layoutSendPic"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -138,6 +138,7 @@
         android:src="@drawable/ic_send_pic"
        />
     </FrameLayout>
+    !-->
     
     <EditText
         android:id="@+id/inputMessage"
@@ -156,8 +157,10 @@
         android:textColor="@color/white"
         android:textColorHint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/layoutSendPic"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/layoutSend"/>
+    <!--  app:layout_constraintStart_toEndOf="@id/layoutSendPic"!-->
+
 
     <TextView
         android:id="@+id/textAvailability"

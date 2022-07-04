@@ -38,7 +38,6 @@ private PreferenceManager preferenceManager;
     /*    binding.textViewForget.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(),ForgetActivity.class)));*/
          binding.btnSign.setOnClickListener(v -> {
-
              if (isValidSignInDetails()){
                  signIn();
          }

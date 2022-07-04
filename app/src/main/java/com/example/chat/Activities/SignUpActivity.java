@@ -69,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_PASSWORD, binding.Password.getText().toString());
         user.put(Constants.KEY_NAME, binding.signupName.getText().toString());
         user.put(Constants.KEY_IMAGE,encodedImage);
-
         //phone used?
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_PHONE, binding.signupPhone.getText().toString())
